@@ -1,0 +1,118 @@
+import random
+
+
+place = ["-", "-", "-",
+        "-", "-", "-",
+        "-", "-", "-"]
+
+player = "X"
+winner = None
+playingGame = True
+
+# game place
+def printPlace(place):
+    print(place[0] + " | " + place[1] + " | " + place[2])
+    print("---------")
+    print(place[3] + " | " + place[4] + " | " + place[5])
+    print("---------")
+    print(place[6] + " | " + place[7] + " | " + place[8])
+
+
+# take player input
+def playerInput(place):
+    inp = int(input("\n Select a spot between 1-9 :"))
+    if place[inp-1] == "-":
+        place[inp-1] = player
+    else:
+        print("Oops ! Player is already at that spot.")
+
+
+# check for win or tie
+def checkHorizontle(place):
+    global winner
+    if place[0] == place[1] == place[2] and place[0] != "-":
+        winner = place[0]
+        return True
+    elif place[3] == place[4] == place[5] and place[3] != "-":
+        winner = place[3]
+        return True
+    elif place[6] == place[7] == place[8] and place[6] != "-":
+        winner = place[6]
+        return True
+
+def checkRow(place):
+    global winner
+    if place[0] == place[3] == place[6] and place[0] != "-":
+        winner = place[0]
+        return True
+    elif place[1] == place[4] == place[7] and place[1] != "-":
+        winner = place[1]
+        return True
+    elif place[2] == place[5] == place[8] and place[2] != "-":
+        winner = place[3]
+        return True
+
+
+def checkDiag(place):
+    global winner
+    if place[0] == place[4] == place[8] and place[0] != "-":
+        winner = place[0]
+        return True
+    elif place[2] == place[4] == place[6] and place[4] != "-":
+        winner = place[2]
+        return True
+
+
+def checkIfWin(place):
+    global playingGame
+    if checkHorizontle(place):
+        printPlace(place)
+        print(f"\n Congratulations ! The winner is {winner}!")
+        playingGame = False
+
+    elif checkRow(place):
+        printPlace(place)
+        print(f"\n Congratulations ! The winner is {winner}!")
+        playingGame = False
+
+    elif checkDiag(place):
+        printPlace(place)
+        print(f"\n Congratulations ! The winner is {winner}!")
+        playingGame = False
+
+
+def checkIfTie(place):
+    global playingGame
+    if "-" not in place:
+        printPlace(place)
+        print("\n Game is tie! Let play another round.")
+        playingGame = False
+
+
+# switch player
+def switchPlayer():
+    global player
+    if player == "X":
+        player = "O"
+    else:
+        player = "X"
+
+
+def computer(place):
+    while player == "O":
+        position = random.randint(0, 8)
+        if place[position] == "-":
+            place[position] = "O"
+            switchPlayer()
+
+
+while playingGame:
+    printPlace(place)
+    playerInput(place)
+    checkIfWin(place)
+    checkIfTie(place)
+    switchPlayer()
+    computer(place)
+    checkIfWin(place)
+    checkIfTie(place)
+
