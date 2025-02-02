@@ -24,7 +24,7 @@ def playerInput(place):
     if place[inp-1] == "-":
         place[inp-1] = player
     else:
-        print("Oops ! Player is already at that spot.")
+        print("Oops ! Player is already in that spot.")
 
 
 # check for win or tie
